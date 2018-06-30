@@ -1,11 +1,13 @@
 package com.example.restclientapi;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -58,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
             try {
                 Gson gson = new Gson();
 
-                Type userData=new TypeToken<List<UserData>>(){}.getType();
+                Type userData = new TypeToken<List<UserData>>() {
+                }.getType();
                 String response = new String(responseBody);
                 userDataArrayList = new ArrayList<>();
                 userDataArrayList = gson.fromJson(response, userData);
@@ -87,5 +90,13 @@ public class MainActivity extends AppCompatActivity {
             recyclerView.setHasFixedSize(true);
             recyclerView.setAdapter(dataAdapter);
       */
+
+        dataAdapter.setItemClickCallback(new OnClickCallback<ArrayList<UserData>, Integer, String, Activity>() {
+            @Override
+            public void onClickCallBack(ArrayList<UserData> data, Integer position, String etc, Activity activity) {
+                Toast.makeText(activity, "" + data.get(position).getName(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }

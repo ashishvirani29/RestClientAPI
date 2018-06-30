@@ -16,7 +16,7 @@ public class DataAdapter extends Adapter<DataAdapter.ViewHolder> {
     private static final String TAG = "StickerAdapter";
     Activity context;
     ArrayList<UserData> userDataArrayList;
-    private OnClickCallback<ArrayList<String>, Integer, String, Activity> mSingleCallback;
+    private OnClickCallback<ArrayList<UserData>, Integer, String, Activity> mSingleCallback;
 
     public DataAdapter(Activity posterActivity, ArrayList<UserData> userDataArrayList) {
         this.context = posterActivity;
@@ -47,6 +47,13 @@ public class DataAdapter extends Adapter<DataAdapter.ViewHolder> {
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
 
         viewHolder.name.setText(userDataArrayList.get(position).getName());
+
+        viewHolder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mSingleCallback.onClickCallBack(userDataArrayList, position, "", context);
+            }
+        });
     }
 
     public void setItemClickCallback(final OnClickCallback singleCallback) {
